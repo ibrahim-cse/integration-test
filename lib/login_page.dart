@@ -9,6 +9,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,21 +23,30 @@ class _LoginPageState extends State<LoginPage> {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: TextField(
+                child: TextFormField(
                   key: const Key('email'),
                   controller: emailController,
-                  decoration: InputDecoration(
-                      border: const OutlineInputBorder(), labelText: 'Email', labelStyle: TextStyle(fontSize: 18), hintText: 'Enter valid email id as abc@gmail.com'),
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Email',
+                    labelStyle: TextStyle(fontSize: 18),
+                    hintText: 'Enter valid email id as abc@gmail.com',
+                  ),
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(left: 15.0, right: 15.0, top: 15, bottom: 0),
+                padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 15, bottom: 0),
                 //padding: EdgeInsets.symmetric(horizontal: 15),
-                child: TextField(
+                child: TextFormField(
                   controller: passwordController,
                   key: Key('password'),
                   obscureText: true,
-                  decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Password', labelStyle: TextStyle(fontSize: 18), hintText: 'Enter secure password'),
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Password',
+                    labelStyle: TextStyle(fontSize: 18),
+                    hintText: 'Enter secure password',
+                  ),
                 ),
               ),
               // FlatButton(
@@ -60,6 +70,61 @@ class _LoginPageState extends State<LoginPage> {
                       Navigator.push(context, MaterialPageRoute(builder: (_) => MyHomePage()));
                     } else {
                       print('Login failed...');
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              content: Stack(
+                                overflow: Overflow.visible,
+                                children: <Widget>[
+                                  Positioned(
+                                      right: -18,
+                                      top: -18,
+                                      child: IconButton(
+                                        highlightColor: Colors.redAccent,
+                                        icon: const Icon(Icons.close, color: Colors.black26),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      )),
+                                  Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      Container(
+                                        width: 200.0,
+                                        height: 60.0,
+                                        child: const Icon(Icons.check, size: 40, color: Colors.green),
+                                        decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: Colors.green)),
+                                      ),
+                                      const SizedBox(height: 20.0),
+                                      const Center(
+                                        child: Text(
+                                          "Login failed... \n\nPlease enter valid email and password",
+                                          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w700),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                              // insetPadding: const EdgeInsets.symmetric(horizontal: 150, vertical: 120),
+                              actions: [
+                                TextButton(
+                                  child: const Text(
+                                    'Close',
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 14.0,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pop(context); // Go back to previous page
+                                  },
+                                ),
+                                const SizedBox(width: 5.0),
+                              ],
+                            );
+                          });
                     }
                   },
                   child: const Text(

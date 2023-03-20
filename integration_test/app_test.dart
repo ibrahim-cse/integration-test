@@ -15,7 +15,6 @@ void main() {
       final login = find.byKey(Key('login'));
       final button1 = find.byKey(Key('button1'));
       final button2 = find.byKey(Key('button2'));
-      // final button3 = find.byKey(Key('button3'));
       final backButton = find.byType(IconButton);
 
       await tester.enterText(email, 'ibrahim@gmail.com');
