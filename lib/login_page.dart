@@ -76,7 +76,8 @@ class _LoginPageState extends State<LoginPage> {
                   child: ElevatedButton(
                     key: const Key('login'),
                     onPressed: () {
-                      if (passwordController.text == '1234' || _formKey.currentState!.validate()) {
+                      if (_formKey.currentState!.validate() && emailController.text.isNotEmpty && passwordController.text == '1234') {
+                        print('Login successful...');
                         Navigator.push(context, MaterialPageRoute(builder: (_) => MyHomePage()));
                       } else {
                         print('Login failed...');
